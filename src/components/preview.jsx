@@ -29,23 +29,23 @@ const Preview = () => {
       },
       {
         name: "septoria_leaf_spot",
-        base: "#D4EEE2",
-        match: "#47B881",
+        base: "#E4E7EB",
+        match: "#425A70",
       },
       {
         name: "spider_mites",
-        base: "#D4EEE2",
-        match: "#47B881",
+        base: "#DDEBF7",
+        match: "#1070CA",
       },
       {
         name: "target_spot",
-        base: "#D4EEE2",
-        match: "#47B881",
+        base: "#F7F9FD",
+        match: "#084B8A",
       },
       {
         name: "tomato_yellow_leaf",
-        base: "#D4EEE2",
-        match: "#47B881",
+        base: "#FEF6F6",
+        match: "#BF0E08",
       },
       {
         name: "healthy",
@@ -99,7 +99,7 @@ const Preview = () => {
           )}
         </Card>
         <Pane paddingTop={50}>
-          <Text>Output</Text>
+          <Heading size={500}>Output</Heading>
           {diseases.map((d) => (
             <Pane
               paddingTop={20}
