@@ -12,7 +12,7 @@ from fastai import *
 from fastai.vision import *
 
 # Define a flask app
-app = Flask(__name__)
+app = Flask(__name__, static_folder=os.path.abspath('templates/static'))
 
 PATH_TO_MODELS_DIR = Path('./models')
 
@@ -42,8 +42,8 @@ def model_predict(img):
     return result,200
 
 @app.route('/', methods=['GET'])
-def status():
-    return jsonify({"status":"OK"}),200
+def index():
+    return render_template("index.html"),200
 
 @app.route('/predict', methods=['POST'])
 def predict():
