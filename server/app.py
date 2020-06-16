@@ -1,6 +1,7 @@
 import json
 import urllib.request
 import base64
+from flask_cors import CORS
 
 # Flask utils
 from flask import Flask, redirect, url_for, render_template, request, jsonify
@@ -16,6 +17,8 @@ app = Flask(__name__)
 PATH_TO_MODELS_DIR = Path('./models')
 
 learn = load_learner(PATH_TO_MODELS_DIR, 'learn.pkl')
+
+cors = CORS(app, resources={r"/predict": {"origins": "*"}})
 
 def encode(img):
     img = (image2np(img.data) * 255).astype('uint8')
@@ -35,8 +38,8 @@ def model_predict(img):
         )
 	
     img_data = encode(img)
-    result = {"class":pred_class, "probs":pred_probs, "image":img_data}
-    return jsonify({"status":"SUCCESS"}),200
+    result = {"class":str(pred_class), "probs":pred_probs}
+    return result,200
 
 @app.route('/', methods=['GET'])
 def status():
@@ -44,7 +47,6 @@ def status():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    print(request.files)
     if request.method == 'POST':
         # Get the file from post request
         img = request.files['file'].read()
