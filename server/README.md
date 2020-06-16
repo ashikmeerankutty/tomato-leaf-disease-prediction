@@ -7,7 +7,7 @@ Backend for tomato leaf detection
 #### Status
 `/`
 #### Predict
-`/predict
+`/predict`
 
 
 ## Getting Started
