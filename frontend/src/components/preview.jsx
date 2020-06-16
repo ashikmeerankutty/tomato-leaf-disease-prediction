@@ -5,6 +5,7 @@ import { Pane, Card, Text, Icon, Heading, Button } from "evergreen-ui";
 const Preview = () => {
   const [match, setMatch] = useState("");
   const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [predictions, setPredictions] = useState(null);
 
   const diseases = [
@@ -60,6 +61,7 @@ const Preview = () => {
   }, []);
 
   const getResults = async () => {
+    setLoading(true)
     const formData = new FormData();
     formData.append("file", file);
     try {
@@ -71,6 +73,7 @@ const Preview = () => {
       setMatch(data.class);
       setPredictions(data.probs);
       setFile(null)
+      setLoading(false)
     } catch (e) {
       console.log(e);
     }
@@ -103,13 +106,15 @@ const Preview = () => {
         <Pane
           display="flex"
           flexDirection="column"
-          alignItems="space-between"
-          justifyContent="space-between"
+          width="100%"
+          padding={50}
         >
           { !file ?  <Card
             backgroundColor="#D2E3FC"
             height={180}
-            padding={60}
+            paddingLeft={20}
+            paddingRight={20}
+            paddingTop={60}
             {...getRootProps()}
           >
             <input {...getInputProps()} />
@@ -128,14 +133,16 @@ const Preview = () => {
                 </Text>
               </Pane>
             )}
-          </Card> : <Pane>Hello</Pane>}
+          </Card> : <Pane display="flex" justifyContent="center" alignItems="center"><img src={URL.createObjectURL(file)} alt="plant" /></Pane>}
           <Pane display="flex" justifyContent="center">
             <Button
               align="center"
               marginTop={20}
+              disabled={!file}
+              isLoading={loading}
               onClick={() => getResults()}
             >
-              Upload
+              {loading ? "Uploading" : "Upload"}
             </Button>
           </Pane>
         </Pane>
